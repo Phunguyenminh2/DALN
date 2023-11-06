@@ -37,11 +37,20 @@
              <th>Email</th>
              <th>Sân đã đặt</th>
              <th>Trạng thái thanh toán</th>
+
            </tr>
          </thead>
          <tbody>
-           <!-- Sử dụng v-for để hiển thị dữ liệu từ MongoDB -->
-         </tbody>
+  <tr v-for="(user, index) in users" :key="index">
+    <td>{{ user.fullName }}</td>
+    <td>{{ user.phone }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.bookedField }}</td>
+    <td>{{ user.checkout }}</td>
+
+    
+  </tr>
+</tbody>
        </table>
      </div>
    
@@ -71,11 +80,29 @@
                this.$router.push('/admin');    
    
        }
-         }
+         },
      // lấy dữ liệu từ MongoDB ở đây và hiển thị nó trong bảng
      
-   
+     data() {
+    return {
+      users: [], // Danh sách người dùng từ cơ sở dữ liệu
+    };
+  },
+  mounted() {
+    this.getUsers(); // Gọi hàm getUsers() khi component được mounted
+  },
+  methods: {
+    async getUsers() {
+      try {
+        const response = await axios.get('http://localhost:5000/api/users'); // Thay thế '/api/users' bằng API endpoint của bạn
+        this.users = response.data; // Lưu trữ danh sách người dùng từ cơ sở dữ liệu vào mảng users
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
    };
+   
    </script>
    
    <style>
