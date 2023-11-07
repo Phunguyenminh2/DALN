@@ -53,7 +53,7 @@ import HomeAdmin from './components/Admin/home.vue';
 import Fields from './components/Admin/Fields.vue';
 import BookingDetail from './components/Admin/Bookings.vue';
 import Revenue from './components/Admin/Revenue.vue';
-
+import Account from './components/Profile/Manager/Account.vue';
 
 import userManager from './components/Admin/userManager.vue';
 
@@ -75,6 +75,8 @@ const router = createRouter({
     { path: "/register", component: Register },
     { path: "/user", component: UserProfile },
     { path: "/manage", component: ManageProfile },
+    { path: "/EditUser/:id", component: Account},
+
     { path: "/admin", component: LoginAdmin },
     { path: "/admin/home", component: HomeAdmin },
     { path: "/Fields", component: Fields },

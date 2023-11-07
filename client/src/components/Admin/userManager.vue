@@ -17,7 +17,7 @@
              Sân đang được đặt
            </router-link>
            <router-link to="/UserManager" class="block text-gray-300 hover:bg-gray-700 py-2 px-4">
-             Trạng thái người dùng
+             Quản lý người dùng
            </router-link>
            <router-link to="/revenue" class="block text-gray-300 hover:bg-gray-700 py-2 px-4">
              Doanh Thu
@@ -28,7 +28,7 @@
          <!-- Nội dung trang chính -->
    
     <div class="fields-container">
-       <h2>Trạng thái người dùng</h2>
+       <h2>Thống kê người dùng</h2>
        <table>
          <thead>
            <tr>
@@ -36,7 +36,7 @@
              <th>Số điện thoại</th>
              <th>Email</th>
              <th>Sân đã đặt</th>
-             <th>Trạng thái thanh toán</th>
+             <th>More</th>
 
            </tr>
          </thead>
@@ -46,7 +46,9 @@
     <td>{{ user.phone }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.bookedField }}</td>
-    <td>{{ user.checkout }}</td>
+    <td><button class="edit btn" @click="editUser(user)">Edit</button>
+      <button class="del btn" @click="deleteUser(user._id)">Delete</button>
+    </td>
 
     
   </tr>
@@ -100,6 +102,20 @@
         console.error(error);
       }
     },
+    editUser(user) {
+    // Gửi người dùng được chọn để chỉnh sửa đến trang chỉnh sửa
+    this.$router.push({ name: '/EditUser/', params: { id: user._id } });
+  },
+  async deleteUser(userId) {
+    try {
+      await axios.delete(`http://localhost:5000/api/users/${userId}`);
+      // Xóa người dùng khỏi cơ sở dữ liệu và cập nhật danh sách người dùng
+      this.getUsers();
+    } catch (error) {
+      console.error(error);
+    }
+  },
+    
   },
    };
    
@@ -127,5 +143,16 @@
    }
    .fields-container tr:nth-child(even) {
      background-color: #f2f2f2;
+   }
+   .btn{
+    padding:5px;
+    border-radius: 5px;
+    background-color: #dddddd;
+
+    margin-right:5px ;
+   }
+   .btn:hover{
+    background-color: #b7b7b7;
+    transform: scale(1.1);
    }
    </style>
